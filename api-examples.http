@@ -1,0 +1,105 @@
+### API Examples for Order Management System
+### You can use these with REST Client extension in VS Code or similar tools
+
+@baseUrl = http://localhost:3000
+@token = YOUR_TOKEN_HERE
+
+### Register a new user
+POST {{baseUrl}}/api/register
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePassword123",
+  "name": "John Doe"
+}
+
+### Login
+# @name login
+POST {{baseUrl}}/api/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePassword123"
+}
+
+### Get all products
+GET {{baseUrl}}/api/products
+
+### Create a new product (should be admin only but no check currently)
+POST {{baseUrl}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Test Product",
+  "description": "A test product",
+  "price": 99.99,
+  "stock": 50
+}
+
+### Update product stock
+PATCH {{baseUrl}}/api/products/1/stock
+Content-Type: application/json
+
+{
+  "stock": 100
+}
+
+### Create an order (requires authentication)
+POST {{baseUrl}}/api/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    },
+    {
+      "productId": 2,
+      "quantity": 1
+    }
+  ]
+}
+
+### Get user's orders (requires authentication)
+GET {{baseUrl}}/api/orders
+Authorization: Bearer {{token}}
+
+### Cancel an order (requires authentication)
+POST {{baseUrl}}/api/orders/1/cancel
+Authorization: Bearer {{token}}
+
+### Get order statistics (should be admin only but no check currently)
+GET {{baseUrl}}/api/stats/orders
+
+### Get all active coupons
+GET {{baseUrl}}/api/coupons
+
+### Create a coupon (should be admin only but no check currently)
+POST {{baseUrl}}/api/coupons
+Content-Type: application/json
+
+{
+  "code": "NEWCUSTOMER",
+  "description": "15% off for new customers",
+  "discount_type": "percentage",
+  "discount_value": 15.00,
+  "min_order_amount": 50.00,
+  "max_discount_amount": 75.00,
+  "max_uses": 100,
+  "max_uses_per_user": 1,
+  "valid_until": "2025-12-31T23:59:59Z"
+}
+
+### Apply coupon to order (requires authentication)
+POST {{baseUrl}}/api/orders/1/apply-coupon
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "couponCode": "WELCOME10"
+}
+

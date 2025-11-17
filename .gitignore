@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+coverage/
+
+# Keep interviewer guide private
+INTERVIEWER_GUIDE.md
